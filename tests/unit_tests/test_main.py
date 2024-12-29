@@ -1,4 +1,4 @@
-from src.pydi.main import Dependency, Inject, has_dependency
+from src.pydi.main import Dependency, Inject, injectable
 
 
 def test_flat_dependencies():
@@ -8,7 +8,7 @@ def test_flat_dependencies():
     def bar() -> str:
         return "bar"
 
-    @has_dependency
+    @injectable
     def function(
         _foo: Inject[str, Dependency(foo)], _bar: Inject[str, Dependency(bar)]
     ):
@@ -21,10 +21,11 @@ def test_nested_dependencies():
     def foo() -> str:
         return "foo"
 
+    @injectable
     def bar(_foo: Inject[str, Dependency(foo)]) -> str:
         return _foo + "bar"
 
-    @has_dependency
+    @injectable
     def function(_bar: Inject[str, Dependency(bar)]):
         return "foobar" + _bar
 
@@ -35,10 +36,11 @@ def test_nested_dependency_with_positional_params():
     def foo() -> str:
         return "foo"
 
+    @injectable
     def bar(_foo: Inject[str, Dependency(foo)]) -> str:
         return _foo + "bar"
 
-    @has_dependency
+    @injectable
     def function(x: str, y: str, _bar: Inject[str, Dependency(bar)]):
         return x + _bar + y
 

@@ -27,7 +27,7 @@ def injectable(func: Callable[..., Any]) -> Callable[..., Any]:
     return wrapper
 
 
-def _infer_dependencies(func: Callable) -> dict[str, Inject]:
+def _infer_dependencies(func: Callable[..., Any]) -> dict[str, Dependency]:
     dependencies = {}
     annotations = get_type_hints(func, include_extras=True)
 
